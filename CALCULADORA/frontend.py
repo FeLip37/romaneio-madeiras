@@ -85,7 +85,8 @@ if st.button("➕ Adicionar ao Romaneio", use_container_width=True, type="primar
         metragem_quadrada_lote = 0.0
         pecas_detalhes = []
         
-        for comp, qtd in cantidades.items():
+        # AQUI ESTAVA O ERRO DE DIGITAÇÃO! Corrigido para "quantidades.items()"
+        for comp, qtd in quantidades.items():
             if qtd > 0:
                 largura_m = largura / 100
                 espessura_m = espessura / 100
