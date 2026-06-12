@@ -1,37 +1,38 @@
 import streamlit as st
 import pandas as pd
 
-# Configuração da Página
-st.set_page_config(page_title="Romaneio MJ Madeiras", layout="wide")
+# 1. Configuração da Página com o ícone da MJ (Favicon) na aba do navegador
+st.set_page_config(
+    page_title="Romaneio MJ Madeiras", 
+    page_icon="MJ_new_icon.png", 
+    layout="wide"
+)
 
-# Injetando CSS para forçar uma fonte moderna e limpa (Inter) e estilizar o subtítulo
+# 2. Injetando CSS Global para forçar a fonte Arial (altamente limpa, formal e universal)
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-    
-    /* Força a fonte Inter em todo o site */
-    html, body, [class*="css"], .st-emotion-cache-1y4p8pa {
-        font-family: 'Inter', sans-serif !important;
+    /* O seletor '*' força a regra em absolutamente todos os elementos do site */
+    * {
+        font-family: 'Arial', sans-serif !important;
     }
     
-    /* Estilo do subtítulo embaixo da logo */
+    /* Ajuste de design do subtítulo embaixo da logo */
     .subtitulo-logo {
-        font-size: 24px;
-        font-weight: 600;
-        color: #2E8B57; /* Verde combinando com o botão */
+        font-size: 22px;
+        font-weight: bold;
+        color: #2E8B57; /* Verde padrão da empresa */
         margin-top: -15px;
         margin-bottom: 25px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Exibição do LOGÓTIPO e Subtítulo
+# Exibição do LOGÓTIPO (reduzido para 230px) e novo Subtítulo
 try:
-    # A largura foi ajustada para 300px para equilibrar com o subtítulo
-    st.image("MJ_new_icon.png", width=300)
-    st.markdown('<p class="subtitulo-logo">Calculadora de Romaneio</p>', unsafe_allow_html=True)
+    st.image("MJ_new_icon.png", width=230)
+    st.markdown('<p class="subtitulo-logo">Calculadora de Romaneio Bruto</p>', unsafe_allow_html=True)
 except:
-    st.error("Erro ao carregar a imagem. Verifique se o nome do ficheiro está como 'MJ_new_icon.png'.")
+    st.error("Erro ao carregar a imagem. Verifique se o nome do arquivo está como 'MJ_new_icon.png'.")
 
 st.divider()
 
@@ -84,7 +85,7 @@ if st.button("➕ Adicionar ao Romaneio", use_container_width=True, type="primar
         metragem_quadrada_lote = 0.0
         pecas_detalhes = []
         
-        for comp, qtd in quantidades.items():
+        for comp, qtd in cantidades.items():
             if qtd > 0:
                 largura_m = largura / 100
                 espessura_m = espessura / 100
