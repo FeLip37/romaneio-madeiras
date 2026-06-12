@@ -43,7 +43,7 @@ comprimentos = [1.50, 2.00, 2.50, 3.00, 3.50, 4.00, 4.50, 5.00, 5.50, 6.00, 6.50
 st.subheader("1. Adicionar Novo Lote")
 
 # Menu de Seleção de Madeiras (Fica FORA do formulário para não zerar)
-lista_madeiras = ["Pinus", "Eucalipto", "Cambará", "Cedro", "Angelim", "Cumaru", "Garapeira", "Roxinho", "Outra"]
+lista_madeiras = ["Pinus", "Eucalipto", "Cambará", "Cedro", "Angelim", "Cumaru", "Garapeira", "Roxinho", "Amescla","Compensado","Porta","Batente", "Outra"]
 tipo_selecionado = st.selectbox("Selecione o Tipo de Madeira", lista_madeiras)
 
 if tipo_selecionado == "Outra":
