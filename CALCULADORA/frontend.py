@@ -19,7 +19,7 @@ st.markdown("""
 # 2. Exibição da Logo da Empresa
 # Certifique-se de que o arquivo 'logo_mj.png' esteja na mesma pasta ou no GitHub
 try:
-    st.image("logo_mj.png", width=250)
+    st.image("MJ_new_icon_png.png", width=250)
 except:
     st.title("🪵 MJ Madeiras Santos")
 
