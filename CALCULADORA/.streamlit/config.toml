@@ -1,0 +1,12 @@
+[theme]
+# Cor principal (Muda a cor do botão "Adicionar")
+primaryColor = "#2E8B57" 
+
+# Cor do fundo da tela inteira
+backgroundColor = "#0E1117"
+
+# Cor do fundo dos painéis e caixas de texto
+secondaryBackgroundColor = "#262730"
+
+# Cor do texto
+textColor = "#FAFAFA"
