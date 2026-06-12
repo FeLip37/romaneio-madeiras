@@ -1,3 +1,3 @@
 [theme]
-# Cor principal (Muda a cor do botão "Adicionar")
-primaryColor = "#2E8B57" 
+# Mantém o botão verde, mas deixa o resto do sistema livre para mudar de tema
+primaryColor = "#2E8B57"
