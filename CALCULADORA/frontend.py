@@ -1,27 +1,15 @@
 import streamlit as st
 import pandas as pd
 
-# 1. Configurações da Página e Fonte Formal via CSS
+# Configuração da Página
 st.set_page_config(page_title="Romaneio MJ Madeiras", layout="wide")
 
-# CSS para mudar a fonte para algo mais formal (Serif) e ajustar o design
-st.markdown("""
-    <style>
-    html, body, [class*="css"] {
-        font-family: 'Georgia', serif;
-    }
-    .main {
-        padding-top: 2rem;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-# 2. Exibição da Logo da Empresa
-# Certifique-se de que o arquivo 'logo_mj.png' esteja na mesma pasta ou no GitHub
+# Exibição do LOGÓTIPO substituindo o texto
 try:
-    st.image("MJ_new_icon_png.png", width=250)
+    # Mostra a imagem com 350 pixels de largura para ficar bem destacada
+    st.image("MJ_new_icon_png.png", width=350)
 except:
-    st.title("🪵 MJ Madeiras Santos")
+    st.error("Erro ao carregar a imagem. Verifique se o nome do ficheiro está como 'MJ_new_icon.png'.")
 
 st.divider()
 
@@ -41,12 +29,12 @@ st.subheader("1. Adicionar Novo Lote")
 lista_madeiras = ["Pinus", "Eucalipto", "Cambará", "Cedro", "Angelim", "Cumaru", "Garapeira", "Roxinho", "Outra"]
 tipo_selecionado = st.selectbox("Selecione o Tipo de Madeira", lista_madeiras)
 
-# Se escolher 'Outra', libera um campo de texto para digitar
 if tipo_selecionado == "Outra":
     tipo_madeira = st.text_input("Digite o nome da madeira:")
 else:
     tipo_madeira = tipo_selecionado
 
+# Organiza Largura e Espessura lado a lado
 col1, col2 = st.columns(2)
 with col1:
     largura = st.number_input("Largura (cm)", min_value=0.0, step=0.5, format="%.2f")
@@ -79,11 +67,11 @@ if st.button("➕ Adicionar ao Romaneio", use_container_width=True, type="primar
                 largura_m = largura / 100
                 espessura_m = espessura / 100
                 
-                # Cálculo de Volume (m³)
+                # Volume (m³)
                 vol_item = largura_m * espessura_m * comp * qtd
                 volume_lote += vol_item
                 
-                # Cálculo de Área (m²) -> Largura x Comprimento x Qtd
+                # Metragem Quadrada (m²) -> Largura x Comprimento x Qtd
                 area_item = largura_m * comp * qtd
                 metragem_quadrada_lote += area_item
                 
@@ -120,7 +108,6 @@ if st.session_state.lotes:
     df = pd.DataFrame(st.session_state.lotes)
     st.dataframe(df, use_container_width=True, hide_index=True)
     
-    # Resumo com as 3 métricas agora
     res_col1, res_col2, res_col3 = st.columns(3)
     with res_col1:
         st.metric(label="Volume Total Acumulado", value=f"{df['Volume (m³)'].sum():.4f} m³")
