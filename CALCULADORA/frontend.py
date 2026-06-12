@@ -4,10 +4,32 @@ import pandas as pd
 # Configuração da Página
 st.set_page_config(page_title="Romaneio MJ Madeiras", layout="wide")
 
-# Exibição do LOGÓTIPO substituindo o texto
+# Injetando CSS para forçar uma fonte moderna e limpa (Inter) e estilizar o subtítulo
+st.markdown("""
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    
+    /* Força a fonte Inter em todo o site */
+    html, body, [class*="css"], .st-emotion-cache-1y4p8pa {
+        font-family: 'Inter', sans-serif !important;
+    }
+    
+    /* Estilo do subtítulo embaixo da logo */
+    .subtitulo-logo {
+        font-size: 24px;
+        font-weight: 600;
+        color: #2E8B57; /* Verde combinando com o botão */
+        margin-top: -15px;
+        margin-bottom: 25px;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# Exibição do LOGÓTIPO e Subtítulo
 try:
-    # Mostra a imagem com 350 pixels de largura para ficar bem destacada
-    st.image("MJ_new_icon_png.png", width=350)
+    # A largura foi ajustada para 300px para equilibrar com o subtítulo
+    st.image("MJ_new_icon.png", width=300)
+    st.markdown('<p class="subtitulo-logo">Calculadora de Romaneio</p>', unsafe_allow_html=True)
 except:
     st.error("Erro ao carregar a imagem. Verifique se o nome do ficheiro está como 'MJ_new_icon.png'.")
 
