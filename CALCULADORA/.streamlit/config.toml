@@ -1,4 +1,4 @@
 [theme]
-# Mantém o botão verde, mas deixa o resto do sistema livre para mudar de tema
 primaryColor = "#2E8B57"
-base="white"
+base = "dark"
+font = "serif"
