@@ -3,7 +3,7 @@ import pandas as pd
 
 st.set_page_config(page_title="Romaneio de Madeiras", layout="wide")
 
-st.title("🪵 Sistema de Romaneio de Material Bruto FE")
+st.title("🪵 Sistema de Romaneio de Material Bruto MJ")
 
 if 'lotes' not in st.session_state:
     st.session_state.lotes = []
