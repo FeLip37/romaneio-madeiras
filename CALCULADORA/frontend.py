@@ -2,13 +2,17 @@ import streamlit as st
 import pandas as pd
 import os
 
-# 1. Rastreador automático de arquivos
+# 1. Rastreador automático de arquivos (
 def encontrar_arquivo(nome_arquivo):
+    # Pasta atual onde este script está (CALCULADORA)
     dir_atual = os.path.dirname(os.path.abspath(__file__))
+    # Pasta "pai" (A raiz do seu repositório no GitHub)
+    dir_raiz = os.path.dirname(dir_atual)
+    
     caminhos = [
         nome_arquivo, 
-        os.path.join(dir_atual, nome_arquivo), 
-        f"CALCULADORA/{nome_arquivo}"
+        os.path.join(dir_atual, nome_arquivo), # Procura na pasta CALCULADORA
+        os.path.join(dir_raiz, nome_arquivo)   # Procura na raiz do GitHub 
     ]
     for caminho in caminhos:
         if os.path.exists(caminho):
@@ -47,7 +51,7 @@ if caminho_logo:
     st.image(caminho_logo, width=230)
     st.markdown('<p class="subtitulo-logo">Calculadora de Romaneio Bruto</p>', unsafe_allow_html=True)
 else:
-    st.error("⚠️ A logo 'MJ_new_icon_png.png' não foi encontrada no GitHub!")
+    st.error("⚠️ A logo não foi encontrada. Verifique os caminhos do repositório.")
     st.markdown('<p class="subtitulo-logo">Calculadora de Romaneio Bruto</p>', unsafe_allow_html=True)
 
 st.divider()
