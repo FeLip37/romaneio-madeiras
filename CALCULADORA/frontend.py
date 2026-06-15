@@ -1,14 +1,28 @@
 import streamlit as st
 import pandas as pd
+import os
 
-# 1. Configuração da Página com o ícone da MJ (Favicon)
+def encontrar_imagem(nome_arquivo):
+    dir_atual = os.path.dirname(os.path.abspath(__file__))
+    caminhos = [
+        nome_arquivo, 
+        os.path.join(dir_atual, nome_arquivo), 
+        f"CALCULADORA/{nome_arquivo}"
+    ]
+    for caminho in caminhos:
+        if os.path.exists(caminho):
+            return caminho
+    return None
+
+caminho_logo = encontrar_imagem("MJ_new_icon.png")
+
 st.set_page_config(
     page_title="Romaneio MJ Madeiras", 
-    page_icon="romaneio-madeiras\MJ_new_icon.png", 
+    page_icon=caminho_logo if caminho_logo else "🪵", 
     layout="wide"
 )
 
-# 2. Injetando CSS Global para forçar a fonte limpa (Arial)
+# 3. CSS Global (Garante a fonte limpa, moderna e formal)
 st.markdown("""
     <style>
     * {
@@ -24,16 +38,15 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Exibição do LOGÓTIPO e Subtítulo
-try:
-    st.image("MJ_new_icon.png", width=230)
+if caminho_logo:
+    st.image(caminho_logo, width=230)
     st.markdown('<p class="subtitulo-logo">Calculadora de Romaneio Bruto</p>', unsafe_allow_html=True)
-except:
-    st.error("Erro ao carregar a imagem. Verifique se o nome do arquivo está como 'MJ_new_icon.png'.")
+else:
+    st.error("⚠️ A imagem 'MJ_new_icon.png' não foi detetada. ")
+    st.markdown('<p class="subtitulo-logo">Calculadora de Romaneio Bruto</p>', unsafe_allow_html=True)
 
 st.divider()
 
-# Inicialização da memória da sessão
 if 'lotes' not in st.session_state:
     st.session_state.lotes = []
 
@@ -42,8 +55,8 @@ comprimentos = [1.50, 2.00, 2.50, 3.00, 3.50, 4.00, 4.50, 5.00, 5.50, 6.00, 6.50
 # --- SEÇÃO 1: ENTRADA DE DADOS ---
 st.subheader("1. Adicionar Novo Lote")
 
-# Menu de Seleção de Madeiras (Fica FORA do formulário para não zerar)
-lista_madeiras = ["Pinus", "Eucalipto", "Cambará", "Cedro", "Angelim", "Cumaru", "Garapeira", "Roxinho", "Amescla","Compensado","Porta","Batente", "Outra"]
+# Menu de Seleção de Madeiras
+lista_madeiras = ["Pinus", "Eucalipto", "Cambará", "Cedro", "Angelim", "Cumaru", "Garapeira", "Roxinho", "Outra"]
 tipo_selecionado = st.selectbox("Selecione o Tipo de Madeira", lista_madeiras)
 
 if tipo_selecionado == "Outra":
@@ -51,7 +64,6 @@ if tipo_selecionado == "Outra":
 else:
     tipo_madeira = tipo_selecionado
 
-# Largura e Espessura (Ficam FORA do formulário para continuarem na tela)
 col1, col2 = st.columns(2)
 with col1:
     largura = st.number_input("Largura (cm)", min_value=0.0, step=0.5, format="%.2f")
@@ -60,8 +72,7 @@ with col2:
     
 st.write("**Quantidade de peças por comprimento:**")
 
-# --- O FORMULÁRIO COMEÇA AQUI ---
-# Tudo aqui dentro será zerado automaticamente ao clicar no botão
+# Formulário otimizado para evitar lentidão e bloqueios no ecrã
 with st.form("form_quantidades", clear_on_submit=True):
     colunas_grid = st.columns(7)
     quantidades = {}
@@ -70,10 +81,8 @@ with st.form("form_quantidades", clear_on_submit=True):
         with colunas_grid[i % 7]:
             quantidades[comp] = st.number_input(f"{comp:.2f}m", min_value=0, step=1)
             
-    # O Botão obrigatoriamente fica dentro do formulário
     submeteu = st.form_submit_button("➕ Adicionar ao Romaneio", type="primary", use_container_width=True)
     
-    # Lógica de cálculo ativada pelo botão
     if submeteu:
         if largura > 0 and espessura > 0:
             volume_lote = 0.0
@@ -86,15 +95,12 @@ with st.form("form_quantidades", clear_on_submit=True):
                     largura_m = largura / 100
                     espessura_m = espessura / 100
                     
-                    # Volume (m³)
                     vol_item = largura_m * espessura_m * comp * qtd
                     volume_lote += vol_item
                     
-                    # Metragem Quadrada (m²)
                     area_item = largura_m * comp * qtd
                     metragem_quadrada_lote += area_item
                     
-                    # Metragem Linear (m)
                     metragem_linear_lote += (comp * qtd)
                     
                     pecas_detalhes.append(f"{qtd}x de {comp:.2f}m")
@@ -111,7 +117,7 @@ with st.form("form_quantidades", clear_on_submit=True):
                 })
                 st.success("Lote adicionado com sucesso!")
             else:
-                st.warning("Adicione pelo menos uma peça para registrar o lote.")
+                st.warning("Adicione pelo menos uma peça para registar o lote.")
         else:
             st.error("A largura e a espessura devem ser maiores que zero.")
 
