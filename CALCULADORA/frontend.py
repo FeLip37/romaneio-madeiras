@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 import os
 
-def encontrar_imagem(nome_arquivo):
+# 1. Rastreador automático de arquivos
+def encontrar_arquivo(nome_arquivo):
     dir_atual = os.path.dirname(os.path.abspath(__file__))
     caminhos = [
         nome_arquivo, 
@@ -14,15 +15,18 @@ def encontrar_imagem(nome_arquivo):
             return caminho
     return None
 
-caminho_logo = encontrar_imagem("MJ_new_icon_png.png")
+# Procura os arquivos com os nomes exatos que você criou
+caminho_logo = encontrar_arquivo("MJ_new_icon_png.png")
+caminho_icone = encontrar_arquivo("MJ_new_icon.ico")
 
+# 2. Configuração da Página usando o seu arquivo .ico
 st.set_page_config(
     page_title="Romaneio MJ Madeiras", 
-    page_icon=caminho_logo if caminho_logo else "🪵", 
+    page_icon=caminho_icone if caminho_icone else "🪵", 
     layout="wide"
 )
 
-# 3. CSS Global (Garante a fonte limpa, moderna e formal)
+# 3. CSS Global (Fonte moderna e limpa)
 st.markdown("""
     <style>
     * {
@@ -38,15 +42,17 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# 4. Exibição do LOGÓTIPO (.png) e Subtítulo
 if caminho_logo:
     st.image(caminho_logo, width=230)
     st.markdown('<p class="subtitulo-logo">Calculadora de Romaneio Bruto</p>', unsafe_allow_html=True)
 else:
-    st.error("⚠️ A imagem 'MJ_new_icon.png' não foi detetada. ")
+    st.error("⚠️ A logo 'MJ_new_icon_png.png' não foi encontrada no GitHub!")
     st.markdown('<p class="subtitulo-logo">Calculadora de Romaneio Bruto</p>', unsafe_allow_html=True)
 
 st.divider()
 
+# Inicialização da memória da sessão
 if 'lotes' not in st.session_state:
     st.session_state.lotes = []
 
@@ -72,7 +78,7 @@ with col2:
     
 st.write("**Quantidade de peças por comprimento:**")
 
-# Formulário otimizado para evitar lentidão e bloqueios no ecrã
+# Formulário otimizado
 with st.form("form_quantidades", clear_on_submit=True):
     colunas_grid = st.columns(7)
     quantidades = {}
@@ -117,7 +123,7 @@ with st.form("form_quantidades", clear_on_submit=True):
                 })
                 st.success("Lote adicionado com sucesso!")
             else:
-                st.warning("Adicione pelo menos uma peça para registar o lote.")
+                st.warning("Adicione pelo menos uma peça para registrar o lote.")
         else:
             st.error("A largura e a espessura devem ser maiores que zero.")
 
