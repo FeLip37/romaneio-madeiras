@@ -4,7 +4,7 @@ import pandas as pd
 # 1. Configuração da Página com o ícone da MJ (Favicon)
 st.set_page_config(
     page_title="Romaneio MJ Madeiras", 
-    page_icon="MJ_new_icon.png", 
+    page_icon="romaneio-madeiras\MJ_new_icon.png", 
     layout="wide"
 )
 
