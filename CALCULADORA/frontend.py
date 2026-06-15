@@ -14,7 +14,7 @@ def encontrar_imagem(nome_arquivo):
             return caminho
     return None
 
-caminho_logo = encontrar_imagem("MJ_new_icon.png")
+caminho_logo = encontrar_imagem("MJ_new_icon_png.png")
 
 st.set_page_config(
     page_title="Romaneio MJ Madeiras", 
