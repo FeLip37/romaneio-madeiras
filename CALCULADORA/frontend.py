@@ -63,7 +63,7 @@ comprimentos = [1.50, 2.00, 2.50, 3.00, 3.50, 4.00, 4.50, 5.00, 5.50, 6.00, 6.50
 
 col_vazia, col_toggle = st.columns([5, 1])
 with col_toggle:
-    modo_impressao = st.toggle("🖨️ Modo Impressão")
+    modo_impressao = st.toggle("Modo Impressão")
 
 if not modo_impressao:
     st.subheader("1. Adicionar Novo Lote")
